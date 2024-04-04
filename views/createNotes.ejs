@@ -1,0 +1,33 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <h5 class="display-5 fw-bold">Hello <%- name %>,</h5>
+    </div>
+    <div class="row justify-content-center md-4 p-5">
+        <form action="/add/notes/" method="POST">
+            <div class="form-group mb-4">
+            <input
+            type="text"
+            class="form-control text-justify font-weight-bold"
+            name="title"
+            id="title"
+            placeholder="Title"
+            required="true"
+          />
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="description"
+            placeholder="Description"
+          />
+          <textarea name="body" id="body" class="form-control" placeholder="Body" required="true"
+          ></textarea
+          >
+        </div>
+            <button type="submit" class="btn btn-custom" name="submit">Create</button>
+        </form>
+    </div>
+
+
+</div>

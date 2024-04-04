@@ -1,0 +1,89 @@
+<div class="container-fluid container-fluid-custom">
+    <div class="row ml-5">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            <%= notes.title %>
+          </li>
+        </ol>
+      </nav>
+    </div>
+  
+    <div class="row justify-content-center md-4 p-5">
+      <form action="/dashboard/item/<%= notes._id%>?_method=PUT" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <div class="form-group mb-4">
+            <input
+            type="text"
+            class="form-control text-justify font-weight-bold"
+            name="title"
+            id="title"
+            value="<%= notes.title %>"
+            placeholder="Title"
+          />
+          <input
+            type="text"
+            class="form-control"
+            name="description"
+            id="description"
+            value="<%= notes.description %>"
+            placeholder="Description"
+          />
+          <textarea name="body" id="body" class="form-control" placeholder="Body">
+  <%= notes.body %></textarea
+          >
+        </div>
+        <button type="submit" class="btn btn-custom">Update</button>
+        <button
+          type="button"
+          class="btn btn-danger text-end"
+          data-toggle="modal"
+          data-target="#deleteModal"
+        >
+          Delete
+        </button>
+      </form>
+      <div
+        class="modal fade"
+        id="deleteModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Notes</h5>
+              <button
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete the note <%= notes.title %>?
+              Changes can't be retrieved.
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
+              <form action="/dashboard/item/<%= notes._id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,108 @@
+body{
+    background-color: #FFC700;
+    font-family: "Unbounded", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    padding: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Timmana', serif; 
+    margin-top: 20px; 
+    color: #124076;
+}
+.description {
+    font-size: 18px;
+    color: #6c757d; 
+    margin-top: 20px;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+}
+
+.header-link {
+    font-size: 25px;
+    color: #124076; 
+}
+
+
+.btn-custom {
+    background-color: #124076;
+    color: #fff; 
+    
+}
+.link-custom{
+    color: #124076;
+}
+
+.btn-custom:hover {
+    background-color: #124076; 
+}
+.nav-link-custom{
+    color: #124076;
+}
+
+.link-custom{
+    color: #124076;
+}
+.link-custom:hover{
+    color: green;
+
+}
+
+.home-title {
+    position: relative;
+    padding: 20px; /* Adjust padding as needed */
+}
+
+.home-title:before,
+.home-title:after {
+    content: '';
+    position: absolute;
+    width: 100px; 
+    height: 100px; 
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.home-title:before {
+    top: 0;
+    left: 0;
+    background-image: url(../img/stars.svg);
+}
+
+.home-title:after {
+    bottom: 0;
+    right: 0;
+    background-image: url(../img/stars.svg);
+}
+
+.btn-outline-custom {
+    color: #124076; 
+    background-color: transparent;
+    border: 1px solid #124076; 
+}
+
+.btn-outline-custom:hover {
+    color: #fff; 
+    background-color: #124076; 
+    border-color: #124076; 
+}
+
+.btn-outline-custom-1 {
+    color: #124076; 
+    background-color: transparent;
+    border: 1px solid #124076; 
+    width: 30%;
+}
+
+.btn-outline-custom-1:hover {
+    color: #fff; 
+    background-color: #124076; 
+    border-color: #124076;
+    width: 30%; 
+}
+
