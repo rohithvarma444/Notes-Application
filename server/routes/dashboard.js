@@ -10,4 +10,6 @@ router.delete('/dashboard/item/:id',checkAuth.isAuth,handlers.deleteNote);
 router.put('/dashboard/item/:id',checkAuth.isAuth,handlers.updateNote);
 router.get('/add/notes',checkAuth.isAuth,handlers.createNote);
 router.post('/add/notes',checkAuth.isAuth,handlers.notes);
+router.post('/search/notes',checkAuth.isAuth,handlers.dashboardSearch);
+router.get('/search/notes',checkAuth.isAuth,handlers.dashboardSearchSubmit);
 module.exports = router;

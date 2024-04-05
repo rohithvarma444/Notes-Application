@@ -138,3 +138,43 @@ exports.notes = async (req, res) => {
   ]);
   res.redirect("/dashboard");
 };
+exports.dashboardSearch = async (req, res) => {
+  const locals = {
+    title: "View-Notes",
+    description: "This is the view notes page",
+  };
+  try {
+    res.render("search", {
+      ...locals,
+      searchResults: "",
+      layout: "../views/layout/dashboard",
+    });
+  } catch (error) {}
+};
+
+exports.dashboardSearchSubmit = async (req, res) => {
+  const locals = {
+    title: "View-Notes",
+    description: "This is the view notes page",
+  };
+  try {
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChars = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+
+    const searchResults = await Note.find({
+      $or: [
+        { title: { $regex: new RegExp(searchNoSpecialChars, "i") } },
+        { body: { $regex: new RegExp(searchNoSpecialChars, "i") } },
+      ],
+    }).where({ user: req.session.passport.user });
+    console.log(searchResults);
+
+    res.render("search", {
+      ...locals,
+      searchResults,
+      layout: "../views/layout/dashboard",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
