@@ -9,12 +9,14 @@ const session = require ('express-session');
 const MongoStore= require('connect-mongo');
 const methodOverride = require ('method-override');
 const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
+const crypto = require('crypto');
+const sessionSecret = crypto.randomBytes(32).toString('hex');
 
 const app = express();
 db();
 app.use(express.static('public'));
 app.use(session({
-    secret: 'helloooo',
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
@@ -32,18 +34,15 @@ app.use(expressCspHeader({
         'font-src': ['fonts.gstatic.com', 'fonts.googleapis.com']
     }
 }));
-
+app.use(methodOverride('_method'))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(methodOverride('_method'))
-
 
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('layout', './layout/main');
 app.set('views', path.join(__dirname, 'views'));
 
-// Define routes
 app.use('/', require('./server/routes/routes'));
 app.use('/',require('./server/routes/auth'));
 app.use('/',require('./server/routes/dashboard'));
