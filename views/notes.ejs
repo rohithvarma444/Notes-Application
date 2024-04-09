@@ -11,9 +11,9 @@
     </div>
   
     <div class="row justify-content-center md-4 p-5">
-      <form action="/dashboard/item/<%= notes._id%>?_method=PUT" method="POST">
-        <input type="hidden" name="_method" value="PUT">
+      <form action="/dashboard/item/<%= notes._id%>" method="POST">
         <div class="form-group mb-4">
+          <input type="hidden" name="_csrf" value="<%- token %>">
             <input
             type="text"
             class="form-control text-justify font-weight-bold"
@@ -78,6 +78,7 @@
                 Cancel
               </button>
               <form action="/dashboard/item/<%= notes._id %>?_method=DELETE" method="POST">
+                <input type="hidden" name="_csrf" value="<%- token %>">
                 <button type="submit" class="btn btn-danger">Delete</button>
               </form>
             </div>

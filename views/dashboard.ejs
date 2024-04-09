@@ -17,10 +17,10 @@
     <% if (notes && notes.length > 0) { %> <% for (var i = 0; i < notes.length;
     i++) { %>
     <div class="col-sm-4 mb-4">
-      <div class="card p-2 border-primary" style="min-height: 200px">
+      <div class="card p-2 border-primary card-custom" >
         <a
           href="/dashboard/item/<%= notes[i]._id %>"
-          style="text-decoration: none"
+         
         >
           <h5 class="card-title"><%= notes[i].title %></h5>
           <h6 class="card-subtitle mb-2 text-muted">

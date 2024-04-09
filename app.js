@@ -8,6 +8,7 @@ const passport= require ('passport');
 const session = require ('express-session');
 const MongoStore= require('connect-mongo');
 const methodOverride = require ('method-override');
+const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
 
 const app = express();
 db();
@@ -19,6 +20,17 @@ app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.DB_URL
     }),
+    cookie: {
+        sameSite: 'strict'
+    }
+}));
+app.use(expressCspHeader({
+    directives: {
+        'default-src': [SELF],
+        'script-src': ['self', 'cdn.jsdelivr.net', 'code.jquery.com', 'stackpath.bootstrapcdn.com'],
+        'style-src': [SELF, 'cdn.jsdelivr.net', 'stackpath.bootstrapcdn.com', 'fonts.googleapis.com', ],
+        'font-src': ['fonts.gstatic.com', 'fonts.googleapis.com']
+    }
 }));
 
 app.use(express.urlencoded({ extended: true }));
@@ -46,7 +58,6 @@ app.use('*',function(req,res){
     })
 
 })
-// Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Listening on PORT ${PORT}`);

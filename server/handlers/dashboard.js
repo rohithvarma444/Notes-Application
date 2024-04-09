@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 const User = require("../models/userModel");
 const Note = require("../models/noteModel");
+const csrf = require('csrf');
+const tokens = new csrf();
+
+const getSecret= async(id) => {
+  try {
+    return (await User.findById(id)).secret;
+  } catch (error) {
+    console.log('Error getting the secret: ',error)
+  }
+}
 
 const getUsername = async (id) => {
   try {
@@ -63,6 +73,8 @@ exports.fetchnote = async (req, res) => {
     const note = await Note.findById(req.params.id).where({
       user: req.session.passport.user,
     });
+    const secret = await getSecret(req.session.passport.user);
+    console.log(secret);
     const locals = {
       title: "View-Notes",
       description: "This is the view notes page",
@@ -72,6 +84,7 @@ exports.fetchnote = async (req, res) => {
       ...locals,
       layout: "../views/layout/dashboard",
       notes: note,
+      token: tokens.create(secret) 
     });
   } catch (error) {
     console.error("Error fetching note:", error.message);
@@ -81,6 +94,12 @@ exports.fetchnote = async (req, res) => {
 
 exports.deleteNote = async (req, res) => {
   try {
+    const token = req.body._csrf;
+    const secret = await getSecret(req.session.passport.user);
+    if (!tokens.verify(secret, token)) {
+      res.status(403).send("Heckor Alert");
+      return;
+    }
     const deleteNotes = await Note.deleteOne({ _id: req.params.id }).where({
       user: req.session.passport.user,
     });
@@ -92,6 +111,13 @@ exports.deleteNote = async (req, res) => {
 
 exports.updateNote = async (req, res) => {
   try {
+    const token = req.body._csrf;
+    const secret = await getSecret(req.session.passport.user);
+
+    if (!tokens.verify(secret, token)) {
+      res.status(403).send("Heckor Alert");
+      return;
+    }
     const update = {
       $set: {
         title: req.body.title,
@@ -100,22 +126,26 @@ exports.updateNote = async (req, res) => {
         updatedAt: new Date(Date.now()),
       },
     };
+
     const updateNotes = await Note.updateOne(
-      { _id: req.params.id },
+      { _id: req.params.id, user: req.session.passport.user },
       update
-    ).where({ user: req.session.passport.user });
+    );
+
     res.redirect("/dashboard");
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
+
 
 exports.createNote = async (req, res) => {
   const locals = {
     title: "Create Notes",
     description: "This is note create route",
   };
-
+  const secret = await getSecret(req.session.passport.user);
   const name = await getUsername(req.session.passport.user);
   console.error(name);
 
@@ -123,10 +153,17 @@ exports.createNote = async (req, res) => {
     ...locals,
     layout: "../views/layout/dashboard",
     name,
+    token: tokens.create(secret)
   });
 };
 
 exports.notes = async (req, res) => {
+  const token = req.body._csrf;
+    const secret = await getSecret(req.session.passport.user);
+    if (!tokens.verify(secret, token)) {
+      res.status(403).send("Heckor Alert");
+      return;
+    }
   const note = await Note.insertMany([
     {
       user: req.session.passport.user,

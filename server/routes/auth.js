@@ -3,6 +3,9 @@ const router = express.Router();
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const User = require("../models/userModel");
+const csrf = require('csrf');
+
+const tokens = new csrf();
 
 passport.initialize();
 
@@ -20,9 +23,9 @@ passport.use(
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         profileImage: profile.photos[0].value,
+        secret: tokens.secretSync()
       };
       console.log(newUser);
-
       try {
         let user = await User.findOne({ googleId: profile.id });
 
@@ -53,7 +56,6 @@ router.get(
 );
 
 router.get("/logout", (req, res) => {
-  console.log("logout triggered");
   req.session.destroy((error) => {
     if (error) {
       console.log(error);

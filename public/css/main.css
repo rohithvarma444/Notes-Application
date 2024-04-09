@@ -105,4 +105,9 @@ footer {
     border-color: #124076;
     width: 30%; 
 }
-
+.card-custom {
+    min-height: 200px;
+}
+.card-custom a{
+    text-decoration: none;
+}
