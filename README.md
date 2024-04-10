@@ -3,7 +3,7 @@
 
 ## Deployment
 #### .env 
-<p> Create a .env in the current folder and enter your mongoCluster and GoogleCallBackURL's</p>
+<p> Create a .env in the current folder and enter your mongoCluster and GoogleCallBack URL.</p>
 
 ```
 DB_URL=mongodb+srv://<username>:<password>@cluster0.w10itna.mongodb.net/new
