@@ -23,5 +23,5 @@ npm install
 npm start
 ```
 ---
-### Security
+## Security
 <p> Enhanced security measures have been implemented to safeguard the update and deletion functionalities of the Notes application. Cross-Site Request Forgery (CSRF) protection has been added, ensuring that only legitimate requests from authorized users are processed, thus preventing malicious actions. Additionally, Content Security Policy (CSP) has been enforced to restrict the loading of external scripts from untrusted sources, mitigating the risk of XSS (Cross-Site Scripting) attacks and other potential security vulnerabilities. These proactive measures enhance the overall security posture of the application, safeguarding user data and maintaining the integrity of the system. </p>
